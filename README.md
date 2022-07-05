@@ -5,8 +5,7 @@ Class Project-1, Elk Stack Deployment
 The files in this repository were used to configure the network depicted below.
 https://github.com/khalieq/cloud/blob/f8838379d7c57c25da1e16a15bcadf1e3b3de51b/Diagram.drawio%20(1).png
 
-
-   These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the _____ file may be used to install only certain pieces of it, such as Filebeat.
+These are the files used to create the configuration:
 
        /etc/ansible/install-elk-playbook.yml
 
@@ -15,7 +14,7 @@ This document contains the following details:
 - Access Policies
 - ELK Configuration
   - Beats in Use
-  - Machines Being Monitored
+  - Machine information
 - How to Use the Ansible Build
 
 
@@ -26,8 +25,8 @@ The main purpose of this network is to expose a load-balanced and monitored inst
 Load balancing ensures that the application will be highly efficient, in addition to restricting traffic to the network.
 
 - What aspect of security do load balancers protect?
-   	- Load balancers protects the system from DDoS attacks by shifting attack traffic.
-  	- Load Balancing contributes to the Availability aspect of security in regards to the CIA Triad.
+   	- Load balancers protect the system from DDoS attacks by moving the traffic to keep a systeem from being overloaded
+  	- Load Balancing focus on keeping a service available
  
 - What is the advantage of a jump box?
    	- The advantage of a jump box is to give access to the user from a single node that can be secured and monitored.
@@ -46,11 +45,10 @@ The configuration details of each machine may be found below.
 
 | Name      |  Function | IP Address | Operating System   |
 |------------ |----------  |-------------- |-------------------------|
-| JumpBox | Gateway  |  10.0.0.8    |  Linux(ubtntu 18.04)|           
-| Web-1     | Server      |  10.1.0.9    |  Linux(ubtntu 18.04)|                     
-| Web-2     | Server      |  10.1.0.10  |  Linux(ubtntu 18.04)|                       
-| Web-3     | Server      |  10.1.0.11  |  Linux(ubtntu 18.04)|            
-| Elk-VM1 | Elk Server|  10.0.0.4    |  Linux(ubtntu 18.04)|
+| JumpBox | Gateway  |  10.0.0.4    |  Linux(ubtntu 18.04)|           
+| Web-1     | Server      |  10.0.0.5    |  Linux(ubtntu 18.04)|                     
+| Web-2     | Server      |  10.0.0.6  |  Linux(ubtntu 18.04)|                                  
+| Elk-VM1 | Elk Server|  10.2.0.4    |  Linux(ubtntu 18.04)|
 
            
  Access Policies
@@ -63,17 +61,16 @@ Only the JumpBox machine can accept connections from the Internet. Access to thi
 
 Machines within the network can only be accessed by SSH.
 
-- Which machine did you allow to access your ELK VM? What was its IP address? JumpBox VM, its private Ip address(Vnet IP)-10.1.0.8
+- Which machine did you allow to access your ELK VM? What was its IP address? The Elk machine can only be accessed via Jumpbox-10.0.0.4
 
 A summary of the access policies in place can be found in the table below.
 
 | Name        | Publicly Accessible | Allowed IP Addresses |
 |--------------|----------------------- |---------------------------|
-| Jump Box  |     NO                    |    10.1.0.8                   |
-| Web-1       |     NO                    |     10.1.0.9                  |
-| Web-2       |     NO                    |    10.1.0.10                 |
-| Web-3       |     NO                    |    10.1.0.11                 |
-| Elk-VM1   |     NO                    |    10.0.0.4                   |
+| Jump Box  |     NO                    |    10.0.0.4                   |
+| Web-1       |     NO                    |     10.0.0.5                  |
+| Web-2       |     NO                    |    10.0.0.6                 |
+| Elk-VM1   |     NO                    |    10.2.0.4                   |
 
 
  Elk Configuration
@@ -154,9 +151,7 @@ Answer the following questions to fill in the blanks:
  - Run the playbooks, and navigate back to the installation page on the ELk-Server GUI, click the check data on the Module Status
  - Click the verfiy incoming Data to check and see the receiving logs from the DVWA machines.  
 
-      you should see the following:
-
- <img width="960" alt="Filebeat syslog" src="https://user-images.githubusercontent.com/66395625/94220157-fadff500-fead-11ea-86cb-3b09a1988f2e.PNG">
+ 
  
    The commands needed to run the Ansible configuration for the Elk-Server are:
 
@@ -171,7 +166,6 @@ cd /etc/ansible/
 	- open a new web browser (http://[your.ELK-VM.External.IP]:5601/app/kibana) This will bring up the Kibana Web Portal
 	- check the Module status for file beat and metric beat to see their data receiving.
 
-** You will need to ensure all files are properly placed before running the ansible-playbooks.
 
 
 
