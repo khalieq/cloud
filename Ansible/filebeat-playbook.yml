@@ -1,6 +1,6 @@
 ---
 - name: Installing and Launch Filebeat
-  hosts: azadmin
+  hosts: RedAdmin
   become: yes
   tasks:
     # Use command module
