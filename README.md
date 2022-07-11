@@ -29,17 +29,14 @@ Load balancing ensures that the application will be highly efficient, in additio
   	- Load Balancing focus on keeping a service available
  
 - What is the advantage of a jump box?
-   	- The advantage of a jump box is to give access to the user from a single node that can be secured and monitored.
-   	- The advantage of a JumpBox is the orgination point for launching Administrative Tasks. This ultimately sets the JumpBox as a SAW (Secure Admin Workstation). All Administrators when conducting any Administrative Task will be required to connect to the JumpBox (SAW) before perfoming any task/assignment.
+   	- Allows users secure access to the server by adding another layer of security 
 
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the changes to the Logs and system traffic.
 
 - What does Filebeat watch for?
-   	- Filebeat watches for any information in the file system which has been changed and when it has.  
-   	- Filebeat watches for log files/locations and collects log events
+   	- lightweight shipper for shipping and centralizing data
 - What does Metricbeat record?
-  	- Metricbeat takes the metrics and statistics that collects and ships them to the output you specify.
-   	- Metricbeat records metric and statistical data from the operating system and from services running on the server.
+  	- lightweight shipper that collects metric information on the operating system and services running on the server
 
 The configuration details of each machine may be found below.
 
@@ -52,12 +49,11 @@ The configuration details of each machine may be found below.
 
            
  Access Policies
-
-The machines on the internal network are not exposed to the public Internet. 
+- Machines are only accessible by whitelisted IPs
 
 Only the JumpBox machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- Add whitelisted IP addresses:-
-    	- Public IP address which changes everytime when the VM is on/off eg of Public IP 137.135.115.14
+- Add whitelisted IP addresses:- 173.73.222.169
+    	
 
 Machines within the network can only be accessed by SSH.
 
@@ -77,7 +73,7 @@ A summary of the access policies in place can be found in the table below.
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
 - What is the main advantage of automating configuration with Ansible?
-  	- This allows you to deploy to multiple servers using a single playbook
+  	- Its simplistic, makes applications and systems easier to deploy and maintain.
 
 The playbook implements the following tasks:
 - Install docker.io
@@ -86,16 +82,12 @@ The playbook implements the following tasks:
 - Launch docker container: elk
 - Command: sysctl -w vm.max_map_count=262144
 
-The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
- 
- <img width="675" alt="docker_ps" src="https://user-images.githubusercontent.com/66395625/94220139-f1568d00-fead-11ea-865b-2db7931cd4d4.PNG">
-
 Target Machines & Beats
 
 This ELK server is configured to monitor the following machines:
 
 - List the IP addresses of the machines you are monitoring:-
-    	- Web-1(10.1.0.9) Web-2(10.1.0.10)and Web-3(10.1.0.11)
+    	- Web-1(10.0.0.5) Web-2(10.0.0.6)
 
 We have installed the following Beats on these machines:
 - Specify which Beats you successfully installed:-
@@ -119,26 +111,21 @@ SSH into the control node and follow the steps below:
 /etc/ansible/host should include:
 
 [webservers]
-[10.1.0.9] ansible_python_interpreter=/usr/bin/python3
-[10.1.0.10] ansible_python_interpreter=/usr/bin/python3
-[10.1.0.11] ansible_python_interpreter=/usr/bin/python3
+[10.0.0.5] ansible_python_interpreter=/usr/bin/python3
+[10.0.0.6] ansible_python_interpreter=/usr/bin/python3
 
 [elk]
-[10.0.0.4] ansible_python_interpreter=/usr/bin/python3
+[10.2.0.4] ansible_python_interpreter=/usr/bin/python3
 
 Run the playbook, and SSH into the Elk vm, then run docker ps to check that the installation worked as expected.
 Playbook: install_elk.yml Location: /etc/ansible/install_elk.yml
-Navigate to  http://[your.ELK-VM.External.IP]:5601/app/kibana to confirm ELK and kibana are running.  You may need to try from multiple web browsers
-Click 'Explore On Your Own' and you should see the following:
-
- <img width="960" alt="Kibana_dashboard" src="https://user-images.githubusercontent.com/66395625/94220160-fddae580-fead-11ea-9c17-8a789bf1522c.PNG">
-
+Navigate to  http://[your.ELK-VM.External.IP]:5601/app/kibana to confirm ELK and kibana are running.  
 
 Answer the following questions to fill in the blanks:
 - Which file is the playbook? Where do you copy it?
     	 /etc/ansible/file/filebeat-configuration.yml 
 - Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-        edit the /etc/ansible/hosts file to add webserver/elkserver ip addresses
+        add the correct Ip addresses in the ansible host file
 - Which URL do you navigate to in order to check that the ELK server is running?
     	 http://[your.ELK-VM.External.IP]:5601/app/kibana
 
